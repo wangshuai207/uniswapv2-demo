@@ -44,3 +44,14 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 # Performance optimizations
 
 For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
+
+TokenA deployed to: 0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82
+TokenB deployed to: 0x9A676e781A523b5d0C0e43731313A708CB607508
+WETH deployed to: 0x0B306BF915C4d645ff596e518fAf3F9669b97016
+WETHPartner deployed to: 0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1
+
+UniswapV2Factory deployed to: 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+UniswapV2Factory codeHash is: 0x9921bed6fd45ef089eb9c834fb0b65aece90e4bc7a8e20d62136adea5a13135c
+
+UniswapV2Pair address to: 0x57C3858eECBc52B9f8537EA26a20099D7e53EEcb
+UniswapV2Router02 deployed to: 0x68B1D87F95878fE05B998F19b66F4baba5De1aed

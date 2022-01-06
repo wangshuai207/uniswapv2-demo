@@ -7,9 +7,8 @@ contract ERC20 {
 
     string public constant name = 'Test Token';
     string public constant symbol = 'TT';
-    uint8 public constant decimals = 5;
-     // 固定发行量，保存在一个无符号整型里
-    uint256 public totalSupply = 100000000000;
+    uint8 public constant decimals = 18;
+    uint  public totalSupply;
     mapping(address => uint) public balanceOf;
     mapping(address => mapping(address => uint)) public allowance;
 
@@ -21,7 +20,7 @@ contract ERC20 {
     event Approval(address indexed owner, address indexed spender, uint value);
     event Transfer(address indexed from, address indexed to, uint value);
 
-    constructor() public {
+    constructor(uint _totalSupply) public {
         uint chainId;
         assembly {
             chainId := chainid()
@@ -35,7 +34,7 @@ contract ERC20 {
                 address(this)
             )
         );
-        _mint(msg.sender, totalSupply);
+        _mint(msg.sender, _totalSupply);
     }
 
     function _mint(address to, uint value) internal {

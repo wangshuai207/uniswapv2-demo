@@ -968,8 +968,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/ERC20.sol": {
-      "lastModificationDate": 1641457263904,
-      "contentHash": "e5d8a41a6d89b0a3a7ddf0fb98c48638",
+      "lastModificationDate": 1641471305497,
+      "contentHash": "a8eca4f46171dfeea79596b35f4eeef4",
       "sourceName": "contracts/ERC20.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1190,7 +1190,7 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/libraries/UniswapV2Library.sol": {
-      "lastModificationDate": 1641457263906,
+      "lastModificationDate": 1641468660422,
       "contentHash": "16cc8c1dfbb4e59c2c0a1dcea5267196",
       "sourceName": "contracts/libraries/UniswapV2Library.sol",
       "solcConfig": {
@@ -1703,8 +1703,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/WETH9.sol": {
-      "lastModificationDate": 1641457263901,
-      "contentHash": "ef0f2e062f326bf15e5131a00c932580",
+      "lastModificationDate": 1641468924935,
+      "contentHash": "c60afbcd54ec9da3b3908e2db56c0d12",
       "sourceName": "contracts/WETH9.sol",
       "solcConfig": {
         "version": "0.6.6",

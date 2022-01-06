@@ -4,18 +4,22 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 import { ethers } from "hardhat";
+import { BigNumber } from '@ethersproject/bignumber'
 
+function expandTo18Decimals(n: number): BigNumber {
+  return BigNumber.from(n).mul(BigNumber.from(10).pow(18))
+}
 
 async function main() {
 
   // We get the contract to deploy
-  const TokenA = await ethers.getContractFactory("TokenA");
-  const tokenA = await TokenA.deploy();
+  const TokenA = await ethers.getContractFactory("ERC20");
+  const tokenA = await TokenA.deploy(expandTo18Decimals(10000));
   await tokenA.deployed();
-  console.log("TokenA deployed to:", tokenA.address);//0x5FbDB2315678afecb367f032d93F642f64180aa3
+  console.log("TokenA deployed to:", tokenA.address);//0x7925FC27C5928E9c70D515e216E6b53d045c1949
 
-  const TokenB = await ethers.getContractFactory("TokenB");
-  const tokenB = await TokenB.deploy();
+  const TokenB = await ethers.getContractFactory("ERC20");
+  const tokenB = await TokenB.deploy(expandTo18Decimals(10000));
   await tokenB.deployed();
   console.log("TokenB deployed to:", tokenB.address);//0xf0b221f97E263BbE5843466ee3b7247eeD9e0DA9
 
@@ -27,7 +31,7 @@ async function main() {
 
   //WETHPartner
   const ERC20 = await ethers.getContractFactory("ERC20");
-  const erc20 = await ERC20.deploy();
+  const erc20 = await ERC20.deploy(expandTo18Decimals(10000));
   await erc20.deployed();
   console.log("WETHPartner deployed to:", erc20.address);//0x32BdF855B2727A55A546411eE9bE2340Ad60743a
 }

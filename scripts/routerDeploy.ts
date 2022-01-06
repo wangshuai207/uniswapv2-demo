@@ -9,8 +9,8 @@ import { ethers } from "hardhat";
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const factoryAddress="0x16E5D64F651CEd42a753c64CfA5D1277Bb9c41C1"
-  const wethAddress="0x1Aa34786b3E492793a8E96Bf0aa18e365d65Dde9"
+  const factoryAddress="0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
+  const wethAddress="0x0B306BF915C4d645ff596e518fAf3F9669b97016"
   const Router02 = await ethers.getContractFactory("UniswapV2Router02");
   const router = await Router02.deploy(factoryAddress,wethAddress);
 
