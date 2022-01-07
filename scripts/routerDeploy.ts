@@ -10,7 +10,7 @@ async function main() {
 
   const [deployer] = await ethers.getSigners();
   const factoryAddress="0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
-  const wethAddress="0x0B306BF915C4d645ff596e518fAf3F9669b97016"
+  const wethAddress="0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
   const Router02 = await ethers.getContractFactory("UniswapV2Router02");
   const router = await Router02.deploy(factoryAddress,wethAddress);
 

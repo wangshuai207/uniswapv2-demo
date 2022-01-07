@@ -10,6 +10,9 @@ import UniswapV2Router02 from '../artifacts/contracts/UniswapV2Router02.sol/Unis
 import ERC20 from '../artifacts/contracts/ERC20.sol/ERC20.json'
 import { BigNumber } from '@ethersproject/bignumber'
 
+const overrides = {
+    gasLimit: 9999999
+  }
 
 async function main() {
 
@@ -22,9 +25,16 @@ async function main() {
 
   const router02 = new Contract(router02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
   console.log("deployer:", deployer.getAddress());
-  const result = await router02.addLiquidity("0x5FbDB2315678afecb367f032d93F642f64180aa3","0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",BigNumber.from(10000),BigNumber.from(10000),0,0,deployer.getAddress(),MaxUint256)
-  console.log("result:", result);
- 
+
+  const result =await router02.swapExactTokensForTokens(
+    BigNumber.from(1000),
+    0,
+    ["0x5FbDB2315678afecb367f032d93F642f64180aa3", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"],
+    deployer.getAddress(),
+    MaxUint256,
+    overrides
+    )
+    console.log("result:", result);
 }
 
 main().catch((error) => {
