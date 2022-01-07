@@ -9,14 +9,22 @@ import { ethers } from "hardhat";
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const factoryAddress="0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"
-  const wethAddress="0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
-  const Router02 = await ethers.getContractFactory("UniswapV2Router02");
-  const router = await Router02.deploy(factoryAddress,wethAddress);
+  const wethAddress="0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00"
+  const sfactoryAddress="0x809d550fca64d94Bd9F66E60752A544199cfAC3D"
+  const sRouter02 = await ethers.getContractFactory("UniswapV2Router02");
+  const srouter = await sRouter02.deploy(sfactoryAddress,wethAddress);
 
-  await router.deployed();
+  await srouter.deployed();
 
-  console.log("UniswapV2Router02 deployed to:", router.address);//0xdC1037F6d3d148d31F8924ec86e06Bd225362Fe6
+  console.log("SushiswapRouter02 deployed to:", srouter.address);
+
+  const ufactoryAddress="0x4c5859f0F772848b2D91F1D83E2Fe57935348029"
+  const uRouter02 = await ethers.getContractFactory("UniswapV2Router02");
+  const urouter = await uRouter02.deploy(ufactoryAddress,wethAddress);
+
+  await urouter.deployed();
+
+  console.log("UniswapV2Router02 deployed to:", urouter.address);
   //
 }
 

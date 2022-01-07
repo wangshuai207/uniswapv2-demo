@@ -14,16 +14,31 @@ import { BigNumber } from '@ethersproject/bignumber'
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const router02Address="0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
-  const tokenA = new Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", JSON.stringify(ERC20.abi),deployer)
-  await tokenA.approve(router02Address,BigNumber.from(10000000000))
-  const tokenB = new Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", JSON.stringify(ERC20.abi),deployer)
-  await tokenB.approve(router02Address,BigNumber.from(10000000000))
+  const tokenAddressA="0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf";
+  const tokenAddressB="0x9d4454B023096f34B160D6B654540c56A1F81688";
+  const tokenA = new Contract(tokenAddressA, JSON.stringify(ERC20.abi),deployer)
+  const tokenB = new Contract(tokenAddressB, JSON.stringify(ERC20.abi),deployer)
 
-  const router02 = new Contract(router02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
+  const approveMount=BigNumber.from(10000).mul(BigNumber.from(10).pow(18))
+  const samountA=BigNumber.from(100).mul(BigNumber.from(10).pow(18))
+  const uamountA=BigNumber.from(200).mul(BigNumber.from(10).pow(18))
+  const amountB=BigNumber.from(1000).mul(BigNumber.from(10).pow(18))
+
+  const srouter02Address="0x1291Be112d480055DaFd8a610b7d1e203891C274"
+  await tokenA.approve(srouter02Address,approveMount)
+  await tokenB.approve(srouter02Address,approveMount)
+  const srouter02 = new Contract(srouter02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
   console.log("deployer:", deployer.getAddress());
-  const result = await router02.addLiquidity("0x5FbDB2315678afecb367f032d93F642f64180aa3","0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",BigNumber.from(10000),BigNumber.from(10000),0,0,deployer.getAddress(),MaxUint256)
-  console.log("result:", result);
+  const sresult = await srouter02.addLiquidity(tokenAddressA,tokenAddressB,samountA,amountB,0,0,deployer.getAddress(),MaxUint256)
+  console.log("result:", sresult);
+
+  const urouter02Address="0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154"
+  await tokenA.approve(urouter02Address,approveMount)
+  await tokenB.approve(urouter02Address,approveMount)
+  const urouter02 = new Contract(urouter02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
+  console.log("deployer:", deployer.getAddress());
+  const uresult = await urouter02.addLiquidity(tokenAddressA,tokenAddressB,uamountA,amountB,0,0,deployer.getAddress(),MaxUint256)
+  console.log("result:", uresult);
  
 }
 

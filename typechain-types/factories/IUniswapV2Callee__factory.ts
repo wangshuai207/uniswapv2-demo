@@ -11,7 +11,6 @@ import type {
 
 const _abi = [
   {
-    constant: false,
     inputs: [
       {
         internalType: "address",
@@ -36,7 +35,6 @@ const _abi = [
     ],
     name: "uniswapV2Call",
     outputs: [],
-    payable: false,
     stateMutability: "nonpayable",
     type: "function",
   },

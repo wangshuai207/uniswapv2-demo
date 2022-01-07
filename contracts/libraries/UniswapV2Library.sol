@@ -1,6 +1,6 @@
 pragma solidity >=0.5.0;
 
-import '@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol';
+import '../interfaces/IUniswapV2Pair.sol';
 
 import "./SafeMath.sol";
 
@@ -21,7 +21,7 @@ library UniswapV2Library {
                 hex'ff',
                 factory,
                 keccak256(abi.encodePacked(token0, token1)),
-                hex'9921bed6fd45ef089eb9c834fb0b65aece90e4bc7a8e20d62136adea5a13135c' // init code hash
+                hex'199766a94ebdbc73b48321d8b1c652061e46f522f99918baecc4d027dd149188' // init code hash
             ))));
     }
 

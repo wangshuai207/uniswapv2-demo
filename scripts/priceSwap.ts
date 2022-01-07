@@ -17,19 +17,22 @@ const overrides = {
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const router02Address="0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"
-  const tokenA = new Contract("0x5FbDB2315678afecb367f032d93F642f64180aa3", JSON.stringify(ERC20.abi),deployer)
-  await tokenA.approve(router02Address,BigNumber.from(10000000000))
-  const tokenB = new Contract("0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512", JSON.stringify(ERC20.abi),deployer)
-  await tokenB.approve(router02Address,BigNumber.from(10000000000))
+  const tokenAddressA="0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf";
+  const tokenAddressB="0x9d4454B023096f34B160D6B654540c56A1F81688";
+
+  const router02Address="0x1291Be112d480055DaFd8a610b7d1e203891C274"
+  //const tokenA = new Contract(tokenAddressA, JSON.stringify(ERC20.abi),deployer)
+  //await tokenA.approve(router02Address,BigNumber.from(10000000000))
+  //const tokenB = new Contract(tokenAddressB, JSON.stringify(ERC20.abi),deployer)
+  //await tokenB.approve(router02Address,BigNumber.from(10000000000))
 
   const router02 = new Contract(router02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
   console.log("deployer:", deployer.getAddress());
-
+  const swapMountA=BigNumber.from(10).mul(BigNumber.from(10).pow(18))
   const result =await router02.swapExactTokensForTokens(
-    BigNumber.from(1000),
+    swapMountA,
     0,
-    ["0x5FbDB2315678afecb367f032d93F642f64180aa3", "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"],
+    [tokenAddressA, tokenAddressB],
     deployer.getAddress(),
     MaxUint256,
     overrides

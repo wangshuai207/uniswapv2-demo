@@ -870,8 +870,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2Factory.sol": {
-      "lastModificationDate": 1641457263900,
-      "contentHash": "b3d7b7985e1a1b5bb837c12b888f134f",
+      "lastModificationDate": 1641539116122,
+      "contentHash": "504eaebd29c20e2868dbaab66dcf7294",
       "sourceName": "contracts/UniswapV2Factory.sol",
       "solcConfig": {
         "version": "0.5.16",
@@ -896,27 +896,27 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "./libraries/UQ112x112.sol",
+        "./interfaces/IUniswapV2Factory.sol",
+        "./interfaces/IUniswapV2Pair.sol",
+        "./UniswapV2ERC20.sol",
+        "./interfaces/IERC20.sol",
+        "./interfaces/IUniswapV2Callee.sol",
+        "./libraries/SafeMath.sol",
+        "./libraries/Math.sol",
+        "./UniswapV2Pair.sol"
+      ],
       "versionPragmas": [
         "=0.5.16"
       ],
       "artifacts": [
-        "IERC20",
-        "IUniswapV2Callee",
-        "IUniswapV2ERC20",
-        "IUniswapV2Factory",
-        "IUniswapV2Pair",
-        "Math",
-        "SafeMath",
-        "UQ112x112",
-        "UniswapV2ERC20",
-        "UniswapV2Factory",
-        "UniswapV2Pair"
+        "UniswapV2Factory"
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2Pair.sol": {
-      "lastModificationDate": 1641457263911,
-      "contentHash": "823697ac56ebafdc9b62bf530332011e",
+      "lastModificationDate": 1641539519215,
+      "contentHash": "039fdf4eef9908471dfbbbcf977f7bb2",
       "sourceName": "contracts/UniswapV2Pair.sol",
       "solcConfig": {
         "version": "0.5.16",
@@ -941,29 +941,20 @@
           }
         }
       },
-      "imports": [],
+      "imports": [
+        "./interfaces/IERC20.sol",
+        "./interfaces/IUniswapV2Callee.sol",
+        "./interfaces/IUniswapV2Pair.sol",
+        "./interfaces/IUniswapV2Factory.sol",
+        "./libraries/Math.sol",
+        "./libraries/UQ112x112.sol",
+        "./libraries/SafeMath.sol",
+        "./UniswapV2ERC20.sol"
+      ],
       "versionPragmas": [
-        ">=0.5.0",
-        ">=0.5.0",
-        "=0.5.16",
-        "=0.5.16",
-        "=0.5.16",
-        "=0.5.16",
-        ">=0.5.0",
-        ">=0.5.0",
-        ">=0.5.0",
         "=0.5.16"
       ],
       "artifacts": [
-        "IERC20",
-        "IUniswapV2Callee",
-        "IUniswapV2ERC20",
-        "IUniswapV2Factory",
-        "IUniswapV2Pair",
-        "Math",
-        "SafeMath",
-        "UQ112x112",
-        "UniswapV2ERC20",
         "UniswapV2Pair"
       ]
     },
@@ -1005,8 +996,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/libraries/SafeMath.sol": {
-      "lastModificationDate": 1641457263907,
-      "contentHash": "9f77127a0e2c55c2058453327e84bde3",
+      "lastModificationDate": 1641539166153,
+      "contentHash": "020a2ac7e358da5c25f2400cc96bc37c",
       "sourceName": "contracts/libraries/SafeMath.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1033,15 +1024,15 @@
       },
       "imports": [],
       "versionPragmas": [
-        "=0.6.6"
+        ">=0.5.16"
       ],
       "artifacts": [
         "SafeMath"
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2Router02.sol": {
-      "lastModificationDate": 1641457263910,
-      "contentHash": "12a8c57909541a65738ecced73a40885",
+      "lastModificationDate": 1641537737264,
+      "contentHash": "49929978678a2f8883806fadb6fa03d2",
       "sourceName": "contracts/UniswapV2Router02.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1067,9 +1058,9 @@
         }
       },
       "imports": [
-        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol",
         "@uniswap/lib/contracts/libraries/TransferHelper.sol",
         "./interfaces/IUniswapV2Router02.sol",
+        "./interfaces/IUniswapV2Factory.sol",
         "./libraries/UniswapV2Library.sol",
         "./libraries/SafeMath.sol",
         "./interfaces/IERC20.sol",
@@ -1190,8 +1181,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/libraries/UniswapV2Library.sol": {
-      "lastModificationDate": 1641468660422,
-      "contentHash": "16cc8c1dfbb4e59c2c0a1dcea5267196",
+      "lastModificationDate": 1641539755036,
+      "contentHash": "e07aabdfd5e8f5256d3730265c6271df",
       "sourceName": "contracts/libraries/UniswapV2Library.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1217,7 +1208,7 @@
         }
       },
       "imports": [
-        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol",
+        "../interfaces/IUniswapV2Pair.sol",
         "./SafeMath.sol"
       ],
       "versionPragmas": [
@@ -1368,8 +1359,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2Router01.sol": {
-      "lastModificationDate": 1641457263910,
-      "contentHash": "c39e8c34a9007c632081c9bcf44323d1",
+      "lastModificationDate": 1641537864378,
+      "contentHash": "fa905316d7e9d43496fae601788a2d12",
       "sourceName": "contracts/UniswapV2Router01.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1395,7 +1386,7 @@
         }
       },
       "imports": [
-        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol",
+        "./interfaces/IUniswapV2Factory.sol",
         "@uniswap/lib/contracts/libraries/TransferHelper.sol",
         "./libraries/UniswapV2Library.sol",
         "./interfaces/IUniswapV2Router01.sol",
@@ -1410,8 +1401,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/libraries/UniswapV2LiquidityMathLibrary.sol": {
-      "lastModificationDate": 1641457263908,
-      "contentHash": "ff4345b5db079741e28bc593d0356893",
+      "lastModificationDate": 1641540209342,
+      "contentHash": "dd3bc932f4da7ac3e612543b5a4c6b0a",
       "sourceName": "contracts/libraries/UniswapV2LiquidityMathLibrary.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -1437,8 +1428,8 @@
         }
       },
       "imports": [
-        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol",
-        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol",
+        "../interfaces/IUniswapV2Pair.sol",
+        "../interfaces/IUniswapV2Factory.sol",
         "@uniswap/lib/contracts/libraries/Babylonian.sol",
         "@uniswap/lib/contracts/libraries/FullMath.sol",
         "./SafeMath.sol",
@@ -1633,7 +1624,7 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/interfaces/V1/IUniswapV1Exchange.sol": {
-      "lastModificationDate": 1641457263914,
+      "lastModificationDate": 1641537830618,
       "contentHash": "5ec7fe77a73b5ace5fc1fbae6b87f34e",
       "sourceName": "contracts/interfaces/V1/IUniswapV1Exchange.sol",
       "solcConfig": {
@@ -1668,7 +1659,7 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/interfaces/V1/IUniswapV1Factory.sol": {
-      "lastModificationDate": 1641457263913,
+      "lastModificationDate": 1641537830617,
       "contentHash": "abe9343b20a93919250e0dba78bfd9c1",
       "sourceName": "contracts/interfaces/V1/IUniswapV1Factory.sol",
       "solcConfig": {
@@ -1735,6 +1726,454 @@
       ],
       "artifacts": [
         "WETH9"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/examples/ExampleSwapToPrice.sol": {
+      "lastModificationDate": 1641539837276,
+      "contentHash": "c7e7024be110e972b38a9b6989f438cd",
+      "sourceName": "contracts/examples/ExampleSwapToPrice.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IUniswapV2Pair.sol",
+        "@uniswap/lib/contracts/libraries/Babylonian.sol",
+        "@uniswap/lib/contracts/libraries/TransferHelper.sol",
+        "../libraries/UniswapV2LiquidityMathLibrary.sol",
+        "../interfaces/IERC20.sol",
+        "../interfaces/IUniswapV2Router01.sol",
+        "../libraries/SafeMath.sol",
+        "../libraries/UniswapV2Library.sol"
+      ],
+      "versionPragmas": [
+        "=0.6.6"
+      ],
+      "artifacts": [
+        "ExampleSwapToPrice"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/examples/ExampleFlashSwap.sol": {
+      "lastModificationDate": 1641522409519,
+      "contentHash": "614bf65e008878f8b5175ed977e6eb68",
+      "sourceName": "contracts/examples/ExampleFlashSwap.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@uniswap/v2-core/contracts/interfaces/IUniswapV2Callee.sol",
+        "../libraries/UniswapV2Library.sol",
+        "../interfaces/V1/IUniswapV1Factory.sol",
+        "../interfaces/V1/IUniswapV1Exchange.sol",
+        "../interfaces/IUniswapV2Router01.sol",
+        "../interfaces/IERC20.sol",
+        "../interfaces/IWETH.sol"
+      ],
+      "versionPragmas": [
+        "=0.6.6"
+      ],
+      "artifacts": [
+        "ExampleFlashSwap"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/node_modules/@uniswap/v2-core/contracts/interfaces/IUniswapV2Callee.sol": {
+      "lastModificationDate": 1641457342607,
+      "contentHash": "30a4aed15b3fa3ce5588118b7cecfa7f",
+      "sourceName": "@uniswap/v2-core/contracts/interfaces/IUniswapV2Callee.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV2Callee"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/examples/ExampleComputeLiquidityValue.sol": {
+      "lastModificationDate": 1641540112062,
+      "contentHash": "8630765210922a33990d47c45a55bbe1",
+      "sourceName": "contracts/examples/ExampleComputeLiquidityValue.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/UniswapV2LiquidityMathLibrary.sol"
+      ],
+      "versionPragmas": [
+        "=0.6.6"
+      ],
+      "artifacts": [
+        "ExampleComputeLiquidityValue"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/FlashLoanArbitrage.sol": {
+      "lastModificationDate": 1641539806593,
+      "contentHash": "fa982aa4363ff3841720c4f885d9bff8",
+      "sourceName": "contracts/FlashLoanArbitrage.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IERC20.sol",
+        "./interfaces/IUniswapV2Router02.sol",
+        "./interfaces/IUniswapV2Pair.sol",
+        "./interfaces/IUniswapV2Factory.sol",
+        "./libraries/UniswapV2Library.sol"
+      ],
+      "versionPragmas": [
+        "=0.6.6"
+      ],
+      "artifacts": [
+        "FlashLoanArbitrage"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2ERC20.sol": {
+      "lastModificationDate": 1641539134465,
+      "contentHash": "0bb0db6c921f761eb3c79769c4de98cc",
+      "sourceName": "contracts/UniswapV2ERC20.sol",
+      "solcConfig": {
+        "version": "0.5.16",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libraries/SafeMath.sol",
+        "./interfaces/IUniswapV2ERC20.sol"
+      ],
+      "versionPragmas": [
+        "=0.5.16"
+      ],
+      "artifacts": [
+        "UniswapV2ERC20"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/interfaces/IUniswapV2Factory.sol": {
+      "lastModificationDate": 1641539291077,
+      "contentHash": "ec39b5372f4f4d52101b4da561e2aee6",
+      "sourceName": "contracts/interfaces/IUniswapV2Factory.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV2Factory"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/libraries/Math.sol": {
+      "lastModificationDate": 1641539170964,
+      "contentHash": "70d3b9955fa86797fa56004f1d40de14",
+      "sourceName": "contracts/libraries/Math.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.16"
+      ],
+      "artifacts": [
+        "Math"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/interfaces/IUniswapV2Callee.sol": {
+      "lastModificationDate": 1641539312510,
+      "contentHash": "44701f5cb9e6ab13a946b9423e464aff",
+      "sourceName": "contracts/interfaces/IUniswapV2Callee.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV2Callee"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/interfaces/IUniswapV2Pair.sol": {
+      "lastModificationDate": 1641539304437,
+      "contentHash": "e5c873c45a978fe770c12c45fa38dc24",
+      "sourceName": "contracts/interfaces/IUniswapV2Pair.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV2Pair"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/libraries/UQ112x112.sol": {
+      "lastModificationDate": 1641539178446,
+      "contentHash": "7c19f4f8c4d5e7a5e65c5d250d06ff3f",
+      "sourceName": "contracts/libraries/UQ112x112.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.16"
+      ],
+      "artifacts": [
+        "UQ112x112"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/interfaces/IUniswapV2ERC20.sol": {
+      "lastModificationDate": 1641539308784,
+      "contentHash": "752c725168e1a5b73a8209897f18c5b9",
+      "sourceName": "contracts/interfaces/IUniswapV2ERC20.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "IUniswapV2ERC20"
       ]
     }
   }
