@@ -12,10 +12,10 @@ import UniswapV2Factory from '../artifacts/contracts/UniswapV2Factory.sol/Uniswa
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const tokenAddressA="0x5FbDB2315678afecb367f032d93F642f64180aa3"
-  const tokenAddressB="0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
-  const sfactory="0xc6e7DF5E7b4f2A278906862b61205850344D4e7d"
-  const ufactory="0x59b670e9fA9D0A427751Af201D676719a970857b"
+  const tokenAddressA="0xd6e1afe5cA8D00A2EFC01B89997abE2De47fdfAf";
+  const tokenAddressB="0x99dBE4AEa58E518C50a1c04aE9b48C9F6354612f";
+  const sfactory="0xB0f05d25e41FbC2b52013099ED9616f1206Ae21B"
+  //const ufactory="0x4c5859f0F772848b2D91F1D83E2Fe57935348029"
   // initialize V2
   // const pairAddress="0x1B7f8CE71a9c84D2Ce5E61aA9442B2508d79cb77"
   // const pair = new Contract(pairAddress, JSON.stringify(UniswapV2Pair.abi),deployer)

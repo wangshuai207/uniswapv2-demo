@@ -25,6 +25,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IUniswapV2Pair__factory>;
     getContractFactory(
+      name: "Arbitrager",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Arbitrager__factory>;
+    getContractFactory(
       name: "ERC20",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
@@ -40,6 +44,10 @@ declare module "hardhat/types/runtime" {
       name: "ExampleSwapToPrice",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ExampleSwapToPrice__factory>;
+    getContractFactory(
+      name: "Flash",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.Flash__factory>;
     getContractFactory(
       name: "FlashLoanArbitrage",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -185,6 +193,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IUniswapV2Pair>;
     getContractAt(
+      name: "Arbitrager",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Arbitrager>;
+    getContractAt(
       name: "ERC20",
       address: string,
       signer?: ethers.Signer
@@ -204,6 +217,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ExampleSwapToPrice>;
+    getContractAt(
+      name: "Flash",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.Flash>;
     getContractAt(
       name: "FlashLoanArbitrage",
       address: string,

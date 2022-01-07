@@ -45,17 +45,19 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 
 For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
 
-TokenA deployed to: 0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf
-TokenB deployed to: 0x9d4454B023096f34B160D6B654540c56A1F81688
-WETH deployed to: 0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00
-WETHPartner deployed to: 0x36C02dA8a0983159322a80FFE9F24b1acfF8B570
+TokenA deployed to: 0xd6e1afe5cA8D00A2EFC01B89997abE2De47fdfAf
+TokenB deployed to: 0x99dBE4AEa58E518C50a1c04aE9b48C9F6354612f
+WETH deployed to: 0x6F6f570F45833E249e27022648a26F4076F48f78
+WETHPartner deployed to: 0xCA8c8688914e0F7096c920146cd0Ad85cD7Ae8b9
 
 INIT_CODE_PAIR_HASH: 0x199766a94ebdbc73b48321d8b1c652061e46f522f99918baecc4d027dd149188
-SushiswapFactory deployed to: 0x809d550fca64d94Bd9F66E60752A544199cfAC3D
-UniswapV2Factory deployed to: 0x4c5859f0F772848b2D91F1D83E2Fe57935348029
+SushiswapFactory deployed to: 0xB0f05d25e41FbC2b52013099ED9616f1206Ae21B
+UniswapV2Factory deployed to: 0x5FeaeBfB4439F3516c74939A9D04e95AFE82C4ae
 
-SushiswapRouter02 deployed to: 0x1291Be112d480055DaFd8a610b7d1e203891C274
-UniswapV2Router02 deployed to: 0x5f3f1dBD7B74C6B46e8c44f98792A1dAf8d69154
+SushiswapRouter02 deployed to: 0xD42912755319665397FF090fBB63B1a31aE87Cee
+UniswapV2Router02 deployed to: 0xfcDB4564c18A9134002b9771816092C9693622e3
 
-sFlashLoanArbitrage deployed to: 0xFD471836031dc5108809D173A067e8486B9047A3
-uFlashLoanArbitrage deployed to: 0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc
+
+sArbitrager deployed to: 0xFD6F7A6a5c21A3f503EBaE7a473639974379c351
+
+pairAddress="0x4df52fC6e76DcC39ba14ab8c9d71B3A7f88fFb48"

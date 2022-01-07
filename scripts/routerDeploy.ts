@@ -9,8 +9,8 @@ import { ethers } from "hardhat";
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const wethAddress="0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00"
-  const sfactoryAddress="0x809d550fca64d94Bd9F66E60752A544199cfAC3D"
+  const wethAddress="0x6F6f570F45833E249e27022648a26F4076F48f78"
+  const sfactoryAddress="0xB0f05d25e41FbC2b52013099ED9616f1206Ae21B"
   const sRouter02 = await ethers.getContractFactory("UniswapV2Router02");
   const srouter = await sRouter02.deploy(sfactoryAddress,wethAddress);
 
@@ -18,7 +18,7 @@ async function main() {
 
   console.log("SushiswapRouter02 deployed to:", srouter.address);
 
-  const ufactoryAddress="0x4c5859f0F772848b2D91F1D83E2Fe57935348029"
+  const ufactoryAddress="0x5FeaeBfB4439F3516c74939A9D04e95AFE82C4ae"
   const uRouter02 = await ethers.getContractFactory("UniswapV2Router02");
   const urouter = await uRouter02.deploy(ufactoryAddress,wethAddress);
 

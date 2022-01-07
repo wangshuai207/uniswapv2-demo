@@ -1031,7 +1031,7 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/UniswapV2Router02.sol": {
-      "lastModificationDate": 1641537737264,
+      "lastModificationDate": 1641542427435,
       "contentHash": "49929978678a2f8883806fadb6fa03d2",
       "sourceName": "contracts/UniswapV2Router02.sol",
       "solcConfig": {
@@ -1888,7 +1888,7 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/FlashLoanArbitrage.sol": {
-      "lastModificationDate": 1641539806593,
+      "lastModificationDate": 1641543169976,
       "contentHash": "fa982aa4363ff3841720c4f885d9bff8",
       "sourceName": "contracts/FlashLoanArbitrage.sol",
       "solcConfig": {
@@ -2174,6 +2174,87 @@
       ],
       "artifacts": [
         "IUniswapV2ERC20"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/Arbitrager.sol": {
+      "lastModificationDate": 1641554276345,
+      "contentHash": "55fe50abece0ee9c8da55c0771c19c8c",
+      "sourceName": "contracts/Arbitrager.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libraries/UniswapV2Library.sol",
+        "./interfaces/IUniswapV2Router02.sol",
+        "./interfaces/IUniswapV2Pair.sol",
+        "./interfaces/IERC20.sol",
+        "hardhat/console.sol"
+      ],
+      "versionPragmas": [
+        "=0.6.6"
+      ],
+      "artifacts": [
+        "Arbitrager"
+      ]
+    },
+    "/Users/fang/project/uniswapv2-demo/contracts/Flash.sol": {
+      "lastModificationDate": 1641548657427,
+      "contentHash": "7c162aedcee3b69941277f3fe570c644",
+      "sourceName": "contracts/Flash.sol",
+      "solcConfig": {
+        "version": "0.6.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./libraries/UniswapV2Library.sol",
+        "./interfaces/IUniswapV2Callee.sol",
+        "./interfaces/IUniswapV2Router02.sol",
+        "./interfaces/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.6.6"
+      ],
+      "artifacts": [
+        "Flash"
       ]
     }
   }
