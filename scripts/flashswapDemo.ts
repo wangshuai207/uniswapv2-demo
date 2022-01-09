@@ -25,10 +25,11 @@ async function main() {
 
    //add liquidity
    let amount0=expandTo18Decimals(10);
-   let amount1=expandTo18Decimals(2000);
+   let amount1=expandTo18Decimals(1000);
    tx=await fixture.sRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amount0,amount1,0,0,to,MaxUint256)
    await tx.wait()
-   amount1=expandTo18Decimals(1000);
+   amount0=expandTo18Decimals(1000);
+   amount1=expandTo18Decimals(1);
    tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amount0,amount1,0,0,to,MaxUint256)
    await tx.wait()
    amount0=await fixture.token0.balanceOf(deployer.address)
@@ -51,8 +52,8 @@ async function main() {
    console.log("sArbitrager deployed to:", sarbitrage.address);
 
  
-    let amountOut=expandTo18Decimals(200)
-    let dMount=expandTo18Decimals(2)
+    let amountOut=expandTo18Decimals(80)
+    let dMount=expandTo18Decimals(10)
     const abiCoder=new ethers.utils.AbiCoder()
     tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","uint" ], [ dMount,MaxUint256]),overrides)
     await tx.wait()

@@ -5,5 +5,5 @@ export function expandTo18Decimals(n: number): BigNumber {
 }
 
 export function expandToDecimals(n: number): BigNumber {
-  return BigNumber.from(n)
+  return BigNumber.from(n).mul(BigNumber.from(10).pow(16))
 }
