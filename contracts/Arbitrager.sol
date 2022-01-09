@@ -16,7 +16,6 @@ contract Arbitrager {
   }
 
   function uniswapV2Call(address _sender, uint _amount0, uint _amount1, bytes calldata _data) external {
-      console.log("sender:",_sender);
       address[] memory path = new address[](2);
       (uint amountRequired, uint deadline) = abi.decode(_data, (uint, uint));
       if (_amount0 == 0) {
@@ -29,8 +28,6 @@ contract Arbitrager {
         path[0] = token1; 
         path[1] = token0;
         uint amountReceived = uRouter.swapExactTokensForTokens(amountEntryToken, 0, path, address(this), deadline)[1];
-        console.log("msg.sender:",msg.sender);
-        console.log("sender:",amountRequired);
         exitToken.transfer(msg.sender, amountRequired);      
         exitToken.transfer(_sender, amountReceived-amountRequired);   
       } else {

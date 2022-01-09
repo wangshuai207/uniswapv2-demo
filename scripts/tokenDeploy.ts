@@ -12,6 +12,7 @@ function expandTo18Decimals(n: number): BigNumber {
 
 async function main() {
 
+
   // We get the contract to deploy
   const TokenA = await ethers.getContractFactory("ERC20");
   const tokenA = await TokenA.deploy(expandTo18Decimals(10000));

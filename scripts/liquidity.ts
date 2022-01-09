@@ -14,8 +14,8 @@ import { BigNumber } from '@ethersproject/bignumber'
 async function main() {
 
   const [deployer] = await ethers.getSigners();
-  const tokenAddressA="0xd6e1afe5cA8D00A2EFC01B89997abE2De47fdfAf";
-  const tokenAddressB="0x99dBE4AEa58E518C50a1c04aE9b48C9F6354612f";
+  const tokenAddressA="0x2B0d36FACD61B71CC05ab8F3D2355ec3631C0dd5";
+  const tokenAddressB="0xfbC22278A96299D91d41C453234d97b4F5Eb9B2d";
   const tokenA = new Contract(tokenAddressA, JSON.stringify(ERC20.abi),deployer)
   const tokenB = new Contract(tokenAddressB, JSON.stringify(ERC20.abi),deployer)
 
@@ -23,7 +23,7 @@ async function main() {
   const amount1=BigNumber.from(100).mul(BigNumber.from(10).pow(18))
   const amount2=BigNumber.from(1000).mul(BigNumber.from(10).pow(18))
 
-  const srouter02Address="0xD42912755319665397FF090fBB63B1a31aE87Cee"
+  const srouter02Address="0x7A9Ec1d04904907De0ED7b6839CcdD59c3716AC9"
   await tokenA.approve(srouter02Address,approveMount)
   await tokenB.approve(srouter02Address,approveMount)
   const srouter02 = new Contract(srouter02Address, JSON.stringify(UniswapV2Router02.abi),deployer)
@@ -31,7 +31,7 @@ async function main() {
   const sresult = await srouter02.addLiquidity(tokenAddressA,tokenAddressB,amount1,amount2,0,0,deployer.getAddress(),MaxUint256)
   console.log("result:", sresult);
 
-  const urouter02Address="0xfcDB4564c18A9134002b9771816092C9693622e3"
+  const urouter02Address="0x49fd2BE640DB2910c2fAb69bB8531Ab6E76127ff"
   await tokenA.approve(urouter02Address,approveMount)
   await tokenB.approve(urouter02Address,approveMount)
   const urouter02 = new Contract(urouter02Address, JSON.stringify(UniswapV2Router02.abi),deployer)

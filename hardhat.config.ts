@@ -39,6 +39,13 @@ const config: HardhatUserConfig = {
   ]
   },
   networks: {
+    hardhat: {
+      // forking: {
+      //   enabled: true,
+      //   url: `${process.env.MAIN_ALCHEMY_URL}`,
+      //   blockNumber: 11754056
+      // }
+    },
     ropsten: {
       url: process.env.ROPSTEN_URL || "",
       accounts:
