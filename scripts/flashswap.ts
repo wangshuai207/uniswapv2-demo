@@ -52,8 +52,8 @@ async function main() {
    console.log("sArbitrager deployed to:", sarbitrage.address);
 
  
-    let amountOut=expandTo18Decimals(80)
-    let dMount=expandTo18Decimals(10)
+    let amountOut=expandTo18Decimals(100)
+    let dMount=expandTo18Decimals(2)
     const abiCoder=new ethers.utils.AbiCoder()
     tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","uint" ], [ dMount,MaxUint256]),overrides)
     await tx.wait()
