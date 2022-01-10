@@ -6,7 +6,7 @@ import { UniswapV2Factory } from "../typechain-types/UniswapV2Factory";
 import { ERC20 } from "../typechain-types/ERC20"; 
 import { UniswapV2Router02 } from "../typechain-types/UniswapV2Router02";
 import { UniswapV2Pair } from "../typechain-types/UniswapV2Pair";
-import UniswapV2PairAbi from '../artifacts/contracts/UniswapV2Factory.sol/UniswapV2Pair.json'
+import UniswapV2PairAbi from '../artifacts/contracts/UniswapV2Pair.sol/UniswapV2Pair.json'
 
 const overrides = {
     gasLimit: 9999999

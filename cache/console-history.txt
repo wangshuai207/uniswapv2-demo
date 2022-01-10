@@ -1,5 +1,0 @@
-await web3.eth.getGasPrice()
-web3
-exit;
-exit
-web3
