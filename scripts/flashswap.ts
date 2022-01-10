@@ -1,7 +1,8 @@
 import { v2Fixture } from "../tools/fixtures"
-import { expandTo18Decimals,expandToDecimals } from "../tools/utils"
+import { expandTo18Decimals } from "../tools/utils"
+import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint256 } from '@ethersproject/constants'
-import { ethers,waffle ,network} from "hardhat";
+import { ethers} from "hardhat";
 import { Arbitrager } from "../typechain-types/Arbitrager";
 
 const overrides = {
@@ -26,10 +27,12 @@ async function main() {
    //add liquidity
    let amount0=expandTo18Decimals(10);
    let amount1=expandTo18Decimals(1000);
+   //sPair token0/token1 10/1000
    tx=await fixture.sRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amount0,amount1,0,0,to,MaxUint256)
    await tx.wait()
-   amount0=expandTo18Decimals(1000);
-   amount1=expandTo18Decimals(1);
+   amount0=expandTo18Decimals(20);
+   amount1=expandTo18Decimals(1000);
+   //uPair token0/token1 20/1000
    tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amount0,amount1,0,0,to,MaxUint256)
    await tx.wait()
    amount0=await fixture.token0.balanceOf(deployer.address)
@@ -51,26 +54,27 @@ async function main() {
    await sarbitrage.deployed();
    console.log("sArbitrager deployed to:", sarbitrage.address);
 
- 
-    let amountOut=expandTo18Decimals(100)
-    let dMount=expandTo18Decimals(2)
-    const abiCoder=new ethers.utils.AbiCoder()
-    tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","uint" ], [ dMount,MaxUint256]),overrides)
-    await tx.wait()
 
-    amount0=await fixture.token0.balanceOf(deployer.address)
-    amount1=await fixture.token1.balanceOf(deployer.address)
-    console.log("owner token0.balanceOf : ",amount0)
-    console.log("owner token1.balanceOf : ",amount1)
+  let amountOut=expandTo18Decimals(200) //sPair借出200 token1
+  let dMount=BigNumber.from(251).mul(BigNumber.from(10).pow(16))//计算sPair借出200个token1需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075 约等于2.51
+  const abiCoder=new ethers.utils.AbiCoder()
+  console.log("sPair.swap : 预先从sPair借出200个token1和uPair交易，交易所得中取出2.51个token0还给sPair");
+  tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","uint" ], [ dMount,MaxUint256]),overrides)
+  await tx.wait()
 
-    sAmount0=await fixture.token0.balanceOf(fixture.sPair.address)
-    sAmount1=await fixture.token1.balanceOf(fixture.sPair.address)
-    console.log("sPair.token0 : ",sAmount0)
-    console.log("sPair.token1 : ",sAmount1)
-    uAmount0=await fixture.token0.balanceOf(fixture.uPair.address)
-    uAmount1=await fixture.token1.balanceOf(fixture.uPair.address)
-    console.log("uPair.token0 : ",uAmount0)
-    console.log("uPair.token1 : ",uAmount1)
+  amount0=await fixture.token0.balanceOf(deployer.address)
+  amount1=await fixture.token1.balanceOf(deployer.address)
+  console.log("owner token0.balanceOf : ",amount0)
+  console.log("owner token1.balanceOf : ",amount1)
+
+  sAmount0=await fixture.token0.balanceOf(fixture.sPair.address)
+  sAmount1=await fixture.token1.balanceOf(fixture.sPair.address)
+  console.log("sPair.token0 : ",sAmount0)
+  console.log("sPair.token1 : ",sAmount1)
+  uAmount0=await fixture.token0.balanceOf(fixture.uPair.address)
+  uAmount1=await fixture.token1.balanceOf(fixture.uPair.address)
+  console.log("uPair.token0 : ",uAmount0)
+  console.log("uPair.token1 : ",uAmount1)
 }
   
   // We recommend this pattern to be able to use async/await everywhere
