@@ -46,10 +46,26 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
 
 # Quick Start
-1 npm install 
-2 npm install solc@0.5.16 solc@0.5.0 solc@0.6.6
-1 连接钱包或Dapp到Hardhat网络,启动一个节点,运行 npx hardhat node
-2 编译合约 npx hardhat compile
-3 运行测试服务 npx hardhat --network localhost  run scripts/flashswap.ts 
 
+```shell
+npm install 
+npm install solc@0.5.16 solc@0.5.0 solc@0.6.6
+```
 
+连接钱包或Dapp到Hardhat网络,单独的窗口启动一个节点,运行
+
+```shell
+npx hardhat node
+```
+
+编译合约
+
+```shell
+npx hardhat compile
+```
+
+运行闪电贷示例
+
+```shell
+npx hardhat --network localhost  run scripts/flashswap.ts 
+```
