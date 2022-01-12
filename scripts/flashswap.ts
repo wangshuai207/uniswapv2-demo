@@ -56,8 +56,9 @@ async function main() {
 
   //sPair借出200 token1
   let amountOut=expandTo18Decimals(200) 
-  //计算sPair借出200个token1需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075 
-  //从uPair加入200 token1 ，兑换出token0数量 20-20*10000/(1000+200*0.997)=0.8149958
+  //计算sPair借出200个token1需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075225677
+  //从uPair加入200 token1 ，兑换出token0数量 20*10000/(1000+200*0.997)=16.675004168751042
+  //bob token0=0.8174732
   const abiCoder=new ethers.utils.AbiCoder()
   console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
   console.log("Bob剩余0.8149958个token0");
