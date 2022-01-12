@@ -129,8 +129,8 @@
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/Arbitrager.sol": {
-      "lastModificationDate": 1641965696155,
-      "contentHash": "ace2b6cf5756807f456299fca604b21f",
+      "lastModificationDate": 1641977158897,
+      "contentHash": "0ad8cedbe4dde5ce7f6b19d3a726d9cd",
       "sourceName": "contracts/Arbitrager.sol",
       "solcConfig": {
         "version": "0.6.6",
@@ -607,47 +607,6 @@
       ],
       "artifacts": [
         "UniswapV2Router01"
-      ]
-    },
-    "/Users/fang/project/uniswapv2-demo/contracts/FlashLoanArbitrage.sol": {
-      "lastModificationDate": 1641543169976,
-      "contentHash": "fa982aa4363ff3841720c4f885d9bff8",
-      "sourceName": "contracts/FlashLoanArbitrage.sol",
-      "solcConfig": {
-        "version": "0.6.6",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./interfaces/IERC20.sol",
-        "./interfaces/IUniswapV2Router02.sol",
-        "./interfaces/IUniswapV2Pair.sol",
-        "./interfaces/IUniswapV2Factory.sol",
-        "./libraries/UniswapV2Library.sol"
-      ],
-      "versionPragmas": [
-        "=0.6.6"
-      ],
-      "artifacts": [
-        "FlashLoanArbitrage"
       ]
     },
     "/Users/fang/project/uniswapv2-demo/contracts/libraries/UniswapV2LiquidityMathLibrary.sol": {
