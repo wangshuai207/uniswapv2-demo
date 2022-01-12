@@ -21,10 +21,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC20__factory>;
     getContractFactory(
-      name: "Flash",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Flash__factory>;
-    getContractFactory(
       name: "FlashLoanArbitrage",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.FlashLoanArbitrage__factory>;
@@ -95,11 +91,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ERC20>;
-    getContractAt(
-      name: "Flash",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Flash>;
     getContractAt(
       name: "FlashLoanArbitrage",
       address: string,

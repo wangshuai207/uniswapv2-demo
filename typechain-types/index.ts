@@ -3,7 +3,6 @@
 /* eslint-disable */
 export type { Arbitrager } from "./Arbitrager";
 export type { ERC20 } from "./ERC20";
-export type { Flash } from "./Flash";
 export type { FlashLoanArbitrage } from "./FlashLoanArbitrage";
 export type { IERC20 } from "./IERC20";
 export type { IUniswapV2Callee } from "./IUniswapV2Callee";
@@ -22,7 +21,6 @@ export type { WETH9 } from "./WETH9";
 
 export { Arbitrager__factory } from "./factories/Arbitrager__factory";
 export { ERC20__factory } from "./factories/ERC20__factory";
-export { Flash__factory } from "./factories/Flash__factory";
 export { FlashLoanArbitrage__factory } from "./factories/FlashLoanArbitrage__factory";
 export { IERC20__factory } from "./factories/IERC20__factory";
 export { IUniswapV2Callee__factory } from "./factories/IUniswapV2Callee__factory";

@@ -39,6 +39,7 @@ async function main() {
   tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amount0,amount1,0,0,to,MaxUint256)
   await tx.wait()
 
+
   let sAmount0=await fixture.token0.balanceOf(fixture.sPair.address)
   let sAmount1=await fixture.token1.balanceOf(fixture.sPair.address)
   console.log("sPair.token0 : ",formatEther(sAmount0))
@@ -55,13 +56,12 @@ async function main() {
 
   //sPair借出200 token1
   let amountOut=expandTo18Decimals(200) 
-  //计算sPair借出200个token1需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075 约等于2.51
-  let dMount=BigNumber.from(251).mul(BigNumber.from(10).pow(16))
+  //计算sPair借出200个token1需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075 
   //从uPair加入200 token1 ，兑换出token0数量 20-20*10000/(1000+200*0.997)=0.8149958
   const abiCoder=new ethers.utils.AbiCoder()
   console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
   console.log("Bob剩余0.8149958个token0");
-  tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","uint" ], [ dMount,MaxUint256]),overrides)
+  tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint" ], [ MaxUint256]),overrides)
   await tx.wait()
 
   amount0=await fixture.token0.balanceOf(bob.address)

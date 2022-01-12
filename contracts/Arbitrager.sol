@@ -16,33 +16,40 @@ contract Arbitrager {
   }
 
   function uniswapV2Call(address _sender, uint _amount0, uint _amount1, bytes calldata _data) external {
-      address[] memory path = new address[](2);
-      (uint amountRequired, uint deadline) = abi.decode(_data, (uint, uint));
-      if (_amount0 == 0) {
-        uint amountEntryToken =_amount1;
-        address token0 = IUniswapV2Pair(msg.sender).token0();
-        address token1 = IUniswapV2Pair(msg.sender).token1();
-        IERC20 entryToken = IERC20(token1);
-        IERC20 exitToken = IERC20(token0);
-        entryToken.approve(address(uRouter), amountEntryToken);  
-        path[0] = token1; 
-        path[1] = token0;
-        uint amountReceived = uRouter.swapExactTokensForTokens(amountEntryToken, 0, path, address(this), deadline)[1];
-        exitToken.transfer(msg.sender, amountRequired);      
-        exitToken.transfer(_sender, amountReceived-amountRequired);   
-      } else {
-        uint amountEntryToken = _amount0;
-        address token0 = IUniswapV2Pair(msg.sender).token0();
-        address token1 = IUniswapV2Pair(msg.sender).token1();
-        IERC20 entryToken = IERC20(token0);
-        IERC20 exitToken = IERC20(token1);
-        entryToken.approve(address(uRouter), amountEntryToken);
-        path[0] = token0;
-        path[1] = token1;
-        uint amountReceived = uRouter.swapExactTokensForTokens(amountEntryToken, 0, path, address(this), deadline)[1];
-        exitToken.transfer(msg.sender, amountRequired);
-        exitToken.transfer(_sender, amountReceived-amountRequired);   
-      }
+    address[] memory path = new address[](2);
+    (uint deadline) = abi.decode(_data, (uint));
+
+    uint amountEntryToken = _amount0 == 0 ? _amount1 : _amount0; 
+    address token0 = IUniswapV2Pair(msg.sender).token0();
+    address token1 = IUniswapV2Pair(msg.sender).token1();
+
+    require(msg.sender == UniswapV2Library.pairFor(sFactory, token0, token1), 'Invalid Request');
+
+    // make sure one of the amounts = 0 
+    require(_amount0 == 0 || _amount1 == 0);
+   
+    //sPath
+    path[0] = _amount0 == 0 ? token0 : token1; 
+    path[1] = _amount0 == 0 ? token1 : token0; 
+
+    // create a pointer to the token we are going to sell on uniswap 
+    IERC20 token = IERC20(_amount0 == 0 ? token1 : token0);
+
+    // approve the uniswapRouter to spend our tokens so the trade can occur             
+    token.approve(address(uRouter), amountEntryToken);
+
+    uint amountRequired = UniswapV2Library.getAmountsIn(sFactory, amountEntryToken, path)[0]; 
+   
+    //uPath
+    path[0] = _amount0 == 0 ? token1 : token0; 
+    path[1] = _amount0 == 0 ? token0 : token1; 
+    uint amountReceived = uRouter.swapExactTokensForTokens( amountEntryToken, amountRequired, path, address(this), deadline)[1]; 
+
+    IERC20 outputToken = IERC20(_amount0 == 0 ? token0 : token1);
+
+    outputToken.transfer(msg.sender, amountRequired);   
+    outputToken.transfer(_sender, amountReceived - amountRequired); 
+
   }
 
   
