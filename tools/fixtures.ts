@@ -25,17 +25,15 @@ const overrides = {
 //   }
 
   interface V2Fixture {
-    // token0: ERC20
-    // token1: ERC20
+    token0: ERC20
+    token1: ERC20
+    token2: ERC20
     sFactory: UniswapV2Factory
     uFactory: UniswapV2Factory
     sRouter: UniswapV2Router02
     uRouter: UniswapV2Router02
     sPair: UniswapV2Pair
     uPair: UniswapV2Pair
-    tokenA: ERC20
-    tokenB: ERC20
-    tokenC: ERC20
   }
 
   export async function v2Fixture(): Promise<V2Fixture> {
@@ -90,14 +88,16 @@ const overrides = {
     // getPair for  sushiswap & uniswap
     const sPairAddress = await sFactory.getPair(tokenA.address, tokenB.address)
     const sPair = (new Contract(sPairAddress, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
-    // const token0Address = await sPair.token0()
-    // console.log("token0 is : ",token0Address)
-    // const token0 = tokenA.address === token0Address ? tokenA : tokenB
-    // const token1 = tokenA.address === token0Address ? tokenB : tokenA
+    const token0Address = await sPair.token0()
+    console.log("token0 is : ",token0Address)
+    const token0 = tokenA.address === token0Address ? tokenA : tokenB
+    const token1 = tokenA.address === token0Address ? tokenB : tokenA
+    const token2 = tokenC
+    
 
     const uPairAddress = await uFactory.getPair(tokenA.address, tokenB.address)
     const uPair = (new Contract(uPairAddress, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
 
-    return {sFactory,uFactory,sRouter,uRouter,sPair,uPair,tokenA,tokenB,tokenC}
+    return {token0,token1,token2,sFactory,uFactory,sRouter,uRouter,sPair,uPair}
 
   }
