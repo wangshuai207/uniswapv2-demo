@@ -20,9 +20,6 @@ contract Arbitrager {
     (uint deadline,address[] memory upath) = abi.decode(_data, (uint,address[]));
 
     uint amountEntryToken = _amount0 == 0 ? _amount1 : _amount0; 
-    // address token0 = IUniswapV2Pair(msg.sender).token0();
-    // address token1 = IUniswapV2Pair(msg.sender).token1();
-
     require(msg.sender == UniswapV2Library.pairFor(sFactory, IUniswapV2Pair(msg.sender).token0(), IUniswapV2Pair(msg.sender).token1()), 'Invalid Request');
 
     // make sure one of the amounts = 0 
@@ -39,9 +36,6 @@ contract Arbitrager {
     token.approve(address(uRouter), amountEntryToken);
 
     uint amountRequired = UniswapV2Library.getAmountsIn(sFactory, amountEntryToken, path)[0]; 
-    //uPath
-    // upath[0] = _amount0 == 0 ? token1 : token0; 
-    // upath[1] = _amount0 == 0 ? token0 : token1; 
     uint amountReceived = uRouter.swapExactTokensForTokens( amountEntryToken, amountRequired, upath, address(this), deadline)[1]; 
 
     IERC20 outputToken = IERC20(_amount0 == 0 ? path[0] : path[1]);

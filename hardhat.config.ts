@@ -53,6 +53,13 @@ const config: HardhatUserConfig = {
       gas: 2100000000,
       gasPrice: 10000000000,
     },
+    kovan: {
+      url: process.env.KOVAN_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      gas: 2100000000,
+      gasPrice: 10000000000,
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

@@ -42,9 +42,6 @@ async function main() {
   amountA=expandTo18Decimals(600);
   let amountC=expandTo18Decimals(500);
   amountB=expandTo18Decimals(1000);
-  //uPair token0/token1 20/1000
-  // tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token1.address,amountA,amountB,0,0,to,MaxUint256)
-  // await tx.wait()
   //uPair token0/token2 600/500  token2/token1 500/1000
   tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token2.address,amountA,amountC,0,0,to,MaxUint256)
   await tx.wait()
