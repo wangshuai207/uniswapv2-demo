@@ -1,6 +1,6 @@
 import { v2Fixture } from "../tools/fixtures"
 import { expandTo18Decimals } from "../tools/utils"
-import { Contract } from 'ethers';
+import { BigNumberish, Contract } from 'ethers';
 import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint256 } from '@ethersproject/constants'
 import { formatEther } from '@ethersproject/units'
@@ -10,6 +10,8 @@ import { Arbitrager } from "../typechain-types/Arbitrager";
 import { UniswapV2Factory } from "../typechain-types/UniswapV2Factory";
 import UniswapV2PairAbi from '../artifacts/contracts/UniswapV2Pair.sol/UniswapV2Pair.json'
 import { UniswapV2Pair } from "../typechain-types/UniswapV2Pair";
+import{BigNumber as BN} from "bignumber.js"
+
 
 const overrides = {
     gasLimit: 9999999
@@ -66,8 +68,8 @@ async function main() {
   //从uPair加入200 token0 ，兑换出token0数量 20*10000/(1000+200*0.997)=16.675004168751042
   //bob token0=0.8174732
   const abiCoder=new ethers.utils.AbiCoder()
-  console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
-  console.log("Bob剩余0.8149958个token0");
+  // console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
+  // console.log("Bob剩余0.8149958个token0");
   console.log("token0:",fixture.token0.address);
   console.log("token1:",fixture.token1.address);
   console.log("token2:",fixture.token2.address);
@@ -97,6 +99,32 @@ async function main() {
   token1=await uPair2.token1()
   console.log(token0,":",formatEther(reserves2._reserve0))
   console.log(token1,":",formatEther(reserves2._reserve1))
+}
+async function call_airbitrage_profit(r:BigNumber,baseToken:string,pair0:UniswapV2Pair,pair1:UniswapV2Pair,pair2:UniswapV2Pair):Promise<BigNumber>{
+ let token0= await pair0.token0()
+ let token1= await pair0.token1()
+ let tokenB= token0==baseToken?token1:token0
+ let reserves=await pair0.getReserves()
+ const x0= token0==baseToken?reserves._reserve0:reserves._reserve1
+ const y0= token0==baseToken?reserves._reserve1:reserves._reserve0
+
+ token0= await pair1.token0()
+ token1= await pair1.token1()
+ let tokenC= token0==tokenB?token1:token0
+ reserves=await pair1.getReserves()
+ const x1= token0==tokenB?reserves._reserve0:reserves._reserve1
+ const y1= token0==tokenB?reserves._reserve1:reserves._reserve0
+
+ token0= await pair2.token0()
+ token1= await pair2.token1()
+ reserves=await pair1.getReserves()
+ const x2= token0==tokenC?reserves._reserve0:reserves._reserve1
+ const y2= token0==tokenC?reserves._reserve1:reserves._reserve0
+ let Ea=y0.mul(y1).mul(y2).div(x1.mul(x2).add(x2.mul(y0).mul(r).add(y0.mul(y1).mul(r.pow(2)))))
+ let Eb=x0.mul(x1).mul(x2).div(x1.mul(x2).add(x2.mul(y0).mul(r).add(y0.mul(y1).mul(r.pow(2)))))
+ let temp=Ea.mul(Eb).mul(r).toString()
+ let tempBN=new BN(temp)
+ return BigNumber.from(tempBN.sqrt().toString()).sub(Eb).div(r)
 }
   
   // We recommend this pattern to be able to use async/await everywhere
