@@ -44,12 +44,30 @@ async function main() {
   amountA=expandTo18Decimals(600);
   let amountC=expandTo18Decimals(500);
   amountB=expandTo18Decimals(1000);
-  //uPair token0/token2 600/500  token2/token1 500/1000
-  tx=await fixture.uRouter.addLiquidity(fixture.token0.address,fixture.token2.address,amountA,amountC,0,0,to,MaxUint256)
+  //uPair token1/token2 1000/500 token2/token0 500/600  
+  tx=await fixture.uRouter.addLiquidity(fixture.token1.address,fixture.token2.address,amountB,amountC,0,0,to,MaxUint256)
   await tx.wait()
-  tx=await fixture.uRouter.addLiquidity(fixture.token2.address,fixture.token1.address,amountC,amountB,0,0,to,MaxUint256)
+  tx=await fixture.uRouter.addLiquidity(fixture.token2.address,fixture.token0.address,amountC,amountA,0,0,to,MaxUint256)
   await tx.wait()
 
+
+  const pair0Address = await fixture.sFactory.getPair(fixture.token0.address, fixture.token1.address)
+  const pair0 = (new Contract(pair0Address, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
+  const pair1Address = await fixture.uFactory.getPair(fixture.token1.address, fixture.token2.address)
+  const pair1 = (new Contract(pair1Address, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
+  const pair2Address = await fixture.uFactory.getPair(fixture.token2.address, fixture.token0.address)
+  const pair2 = (new Contract(pair2Address, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
+
+  let r=(new BN(997)).dividedBy(1000)
+  let tempBN=await call_airbitrage_profit(r,fixture.token0.address,pair0,pair1,pair2)
+  console.log(tempBN.toNumber())
+  let a=formatEther(BigNumber.from(tempBN.toNumber().toString()))
+  console.log(a)
+  console.log( (1000-10*1000/(10+parseFloat(a)*0.997)))
+
+  // let amount=await call_airbitrage_profit(BigNumber.from(0.997),fixture.token0.address,pair0,pair1,pair2)
+  // console.log("max profit:",amount)
+  console.log("r:",r.toString())
 
 
   let sAmountA=await fixture.token0.balanceOf(fixture.sPair.address)
@@ -63,9 +81,9 @@ async function main() {
   console.log("sArbitrager deployed to:", sarbitrage.address);
 
   //sPair借出200 token1
-  let amountOut=expandTo18Decimals(200) 
+  let amountOut=expandTo18Decimals(750) 
   //计算sPair借出200个token0需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075225677
-  //从uPair加入200 token0 ，兑换出token0数量 20*10000/(1000+200*0.997)=16.675004168751042
+  //从uPair加入200 token0 ，兑换出token0数量 20*1000/(1000+200*0.997)=16.675004168751042
   //bob token0=0.8174732
   const abiCoder=new ethers.utils.AbiCoder()
   // console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
@@ -81,50 +99,45 @@ async function main() {
 
   sAmountA=await fixture.token0.balanceOf(fixture.sPair.address)
   sAmountB=await fixture.token1.balanceOf(fixture.sPair.address)
-  console.log("sPair.token0 : ",formatEther(sAmountA))
-  console.log("sPair.token1 : ",formatEther(sAmountB))
-
+  console.log("sPair.token0 : ",await fixture.sPair.token0(),",",formatEther(sAmountA))
+  console.log("sPair.token1 : ",await fixture.sPair.token1(),",",formatEther(sAmountB))
   
-  const upairAddress1 = await fixture.uFactory.getPair(fixture.token0.address, fixture.token2.address)
-  const uPair1 = (new Contract(upairAddress1, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
-  const reserves1=await uPair1.getReserves(overrides)
-  let token0=await uPair1.token0()
-  let token1=await uPair1.token1()
+  const reserves1=await pair1.getReserves(overrides)
+  let token0=await pair1.token0()
+  let token1=await pair1.token1()
   console.log(token0,":",formatEther(reserves1._reserve0))
   console.log(token1,":",formatEther(reserves1._reserve1))
-  const upairAddress2 = await fixture.uFactory.getPair(fixture.token1.address, fixture.token2.address)
-  const uPair2 = (new Contract(upairAddress2, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
-  const reserves2=await uPair2.getReserves(overrides)
-  token0=await uPair2.token0()
-  token1=await uPair2.token1()
+  const reserves2=await pair2.getReserves(overrides)
+  token0=await pair2.token0()
+  token1=await pair2.token1()
   console.log(token0,":",formatEther(reserves2._reserve0))
   console.log(token1,":",formatEther(reserves2._reserve1))
 }
-async function call_airbitrage_profit(r:BigNumber,baseToken:string,pair0:UniswapV2Pair,pair1:UniswapV2Pair,pair2:UniswapV2Pair):Promise<BigNumber>{
+async function call_airbitrage_profit(r:BN,baseToken:string,pair0:UniswapV2Pair,pair1:UniswapV2Pair,pair2:UniswapV2Pair):Promise<BN>{
  let token0= await pair0.token0()
  let token1= await pair0.token1()
  let tokenB= token0==baseToken?token1:token0
  let reserves=await pair0.getReserves()
- const x0= token0==baseToken?reserves._reserve0:reserves._reserve1
- const y0= token0==baseToken?reserves._reserve1:reserves._reserve0
+ const x0= new BN(token0==baseToken? reserves._reserve0.toString():reserves._reserve1.toString())
+ const y0= new BN(token0==baseToken?reserves._reserve1.toString():reserves._reserve0.toString())
 
  token0= await pair1.token0()
  token1= await pair1.token1()
  let tokenC= token0==tokenB?token1:token0
  reserves=await pair1.getReserves()
- const x1= token0==tokenB?reserves._reserve0:reserves._reserve1
- const y1= token0==tokenB?reserves._reserve1:reserves._reserve0
+ const x1= new BN(token0==tokenB?reserves._reserve0.toString():reserves._reserve1.toString())
+ const y1= new BN(token0==tokenB?reserves._reserve1.toString():reserves._reserve0.toString())
 
  token0= await pair2.token0()
  token1= await pair2.token1()
  reserves=await pair1.getReserves()
- const x2= token0==tokenC?reserves._reserve0:reserves._reserve1
- const y2= token0==tokenC?reserves._reserve1:reserves._reserve0
- let Ea=y0.mul(y1).mul(y2).div(x1.mul(x2).add(x2.mul(y0).mul(r).add(y0.mul(y1).mul(r.pow(2)))))
- let Eb=x0.mul(x1).mul(x2).div(x1.mul(x2).add(x2.mul(y0).mul(r).add(y0.mul(y1).mul(r.pow(2)))))
- let temp=Ea.mul(Eb).mul(r).toString()
+ const x2= new BN(token0==tokenC?reserves._reserve0.toString():reserves._reserve1.toString())
+ const y2= new BN(token0==tokenC?reserves._reserve1.toString():reserves._reserve0.toString())
+ let Ea=y0.multipliedBy(y1).multipliedBy(y2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2)))))
+ let Eb=x0.multipliedBy(x1).multipliedBy(x2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2)))))
+ let temp=Ea.multipliedBy(Eb).multipliedBy(r).toString()
  let tempBN=new BN(temp)
- return BigNumber.from(tempBN.sqrt().toString()).sub(Eb).div(r)
+ return new BN(tempBN.sqrt().toString()).minus(Eb).div(r)
 }
   
   // We recommend this pattern to be able to use async/await everywhere
