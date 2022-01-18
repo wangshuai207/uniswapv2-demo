@@ -36,9 +36,9 @@ contract Arbitrager {
     token.approve(address(uRouter), amountEntryToken);
 
     uint amountRequired = UniswapV2Library.getAmountsIn(sFactory, amountEntryToken, path)[0]; 
-    uint amountReceived = uRouter.swapExactTokensForTokens( amountEntryToken, amountRequired, upath, address(this), deadline)[1]; 
+    uint amountReceived = uRouter.swapExactTokensForTokens( amountEntryToken, amountRequired, upath, address(this), deadline)[2]; 
 
-    IERC20 outputToken = IERC20(_amount0 == 0 ? path[0] : path[1]);
+    IERC20 outputToken = IERC20(path[0]);
 
     outputToken.transfer(msg.sender, amountRequired);   
     outputToken.transfer(_sender, amountReceived - amountRequired); 

@@ -59,16 +59,19 @@ async function main() {
   const pair2 = (new Contract(pair2Address, JSON.stringify(UniswapV2PairAbi.abi),bob)) as UniswapV2Pair
 
   let r=(new BN(997)).dividedBy(1000)
-  let tempBN=await call_airbitrage_profit(r,fixture.token0.address,pair0,pair1,pair2)
-  console.log(tempBN.toNumber())
-  let a=formatEther(BigNumber.from(tempBN.toNumber().toString()))
-  console.log(a)
-  console.log( (1000-10*1000/(10+parseFloat(a)*0.997)))
+  let amountInBN=await call_airbitrage_profit(r,fixture.token0.address,pair0,pair1,pair2)
+  let reserves=await pair0.getReserves();
+  let reservesIn=fixture.token0.address==(await pair0.token0())?reserves._reserve0:reserves._reserve1;
+  let reservesOut=fixture.token0.address==(await pair0.token0())?reserves._reserve1:reserves._reserve0;
+  let amountOut=await fixture.sRouter.getAmountOut(BigNumber.from(amountInBN.toFixed(0)),reservesIn,reservesOut)
+  console.log(formatEther(amountOut))
 
-  // let amount=await call_airbitrage_profit(BigNumber.from(0.997),fixture.token0.address,pair0,pair1,pair2)
-  // console.log("max profit:",amount)
+  // a 22.5830240682606
+  // b 692.452239717702
+  // c 204.207625758700
+  // d 73.618347527464
+
   console.log("r:",r.toString())
-
 
   let sAmountA=await fixture.token0.balanceOf(fixture.sPair.address)
   let sAmountB=await fixture.token1.balanceOf(fixture.sPair.address)
@@ -81,7 +84,6 @@ async function main() {
   console.log("sArbitrager deployed to:", sarbitrage.address);
 
   //sPair借出200 token1
-  let amountOut=expandTo18Decimals(750) 
   //计算sPair借出200个token0需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075225677
   //从uPair加入200 token0 ，兑换出token0数量 20*1000/(1000+200*0.997)=16.675004168751042
   //bob token0=0.8174732
@@ -118,7 +120,7 @@ async function call_airbitrage_profit(r:BN,baseToken:string,pair0:UniswapV2Pair,
  let token1= await pair0.token1()
  let tokenB= token0==baseToken?token1:token0
  let reserves=await pair0.getReserves()
- const x0= new BN(token0==baseToken? reserves._reserve0.toString():reserves._reserve1.toString())
+ const x0= new BN(token0==baseToken?reserves._reserve0.toString():reserves._reserve1.toString())
  const y0= new BN(token0==baseToken?reserves._reserve1.toString():reserves._reserve0.toString())
 
  token0= await pair1.token0()
@@ -130,11 +132,13 @@ async function call_airbitrage_profit(r:BN,baseToken:string,pair0:UniswapV2Pair,
 
  token0= await pair2.token0()
  token1= await pair2.token1()
- reserves=await pair1.getReserves()
+ reserves=await pair2.getReserves()
  const x2= new BN(token0==tokenC?reserves._reserve0.toString():reserves._reserve1.toString())
  const y2= new BN(token0==tokenC?reserves._reserve1.toString():reserves._reserve0.toString())
- let Ea=y0.multipliedBy(y1).multipliedBy(y2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2)))))
+ let Ea=y0.multipliedBy(y1).multipliedBy(y2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r)).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2))))
+ console.log("Ea:",Ea.toNumber().toString())
  let Eb=x0.multipliedBy(x1).multipliedBy(x2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2)))))
+ console.log("Eb:",Eb.toNumber().toString())
  let temp=Ea.multipliedBy(Eb).multipliedBy(r).toString()
  let tempBN=new BN(temp)
  return new BN(tempBN.sqrt().toString()).minus(Eb).div(r)
