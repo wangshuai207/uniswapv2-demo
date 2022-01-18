@@ -63,9 +63,10 @@ async function main() {
   let reserves=await pair0.getReserves();
   let reservesIn=fixture.token0.address==(await pair0.token0())?reserves._reserve0:reserves._reserve1;
   let reservesOut=fixture.token0.address==(await pair0.token0())?reserves._reserve1:reserves._reserve0;
+  console.log("pair0 token0 的 amountIn：",formatEther(BigNumber.from(amountInBN.toFixed(0))))
   //根据借贷token0的数量，计算出pair0借出token1的数量，作为三角套利合约执行的参数
   let amountOut=await fixture.sRouter.getAmountOut(BigNumber.from(amountInBN.toFixed(0)),reservesIn,reservesOut)
-  console.log(formatEther(amountOut))
+  console.log("pair0 token1 的 amountOut：",formatEther(amountOut))
 
   // a 22.5830240682606
   // b 692.452239717702
