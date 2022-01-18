@@ -63,13 +63,14 @@ async function main() {
   let reserves=await pair0.getReserves();
   let reservesIn=fixture.token0.address==(await pair0.token0())?reserves._reserve0:reserves._reserve1;
   let reservesOut=fixture.token0.address==(await pair0.token0())?reserves._reserve1:reserves._reserve0;
+  //根据借贷token0的数量，计算出pair0借出token1的数量，作为三角套利合约执行的参数
   let amountOut=await fixture.sRouter.getAmountOut(BigNumber.from(amountInBN.toFixed(0)),reservesIn,reservesOut)
   console.log(formatEther(amountOut))
 
   // a 22.5830240682606
   // b 692.452239717702
   // c 204.207625758700
-  // d 73.618347527464
+  // d 173.618347527464
 
   console.log("r:",r.toString())
 
@@ -83,21 +84,16 @@ async function main() {
   await sarbitrage.deployed();
   console.log("sArbitrager deployed to:", sarbitrage.address);
 
-  //sPair借出200 token1
-  //计算sPair借出200个token0需要的token0数量  ((10*1000/(1000-200))-10)/0.997=2.5075225677
-  //从uPair加入200 token0 ，兑换出token0数量 20*1000/(1000+200*0.997)=16.675004168751042
-  //bob token0=0.8174732
+
   const abiCoder=new ethers.utils.AbiCoder()
-  // console.log("从sPair借出200个token1和uPair交易，兑换出3.3245token0，取出2.51个token0还给sPair");
-  // console.log("Bob剩余0.8149958个token0");
   console.log("token0:",fixture.token0.address);
   console.log("token1:",fixture.token1.address);
   console.log("token2:",fixture.token2.address);
   tx=await fixture.sPair.swap(0,amountOut,sarbitrage.address,abiCoder.encode([ "uint","address[]" ], [ MaxUint256,[fixture.token1.address,fixture.token2.address,fixture.token0.address]]),overrides)
   await tx.wait()
 
-  amountA=await fixture.token0.balanceOf(bob.address)
-  console.log("bob token0.balanceOf : ",formatEther(amountA))
+  let amount=await fixture.token0.balanceOf(bob.address)
+  console.log("bob token0.balanceOf : ",formatEther(amount))
 
   sAmountA=await fixture.token0.balanceOf(fixture.sPair.address)
   sAmountB=await fixture.token1.balanceOf(fixture.sPair.address)
@@ -107,14 +103,15 @@ async function main() {
   const reserves1=await pair1.getReserves(overrides)
   let token0=await pair1.token0()
   let token1=await pair1.token1()
-  console.log(token0,":",formatEther(reserves1._reserve0))
-  console.log(token1,":",formatEther(reserves1._reserve1))
+  console.log("pair1 token0:",token0,":",formatEther(reserves1._reserve0))
+  console.log("pair1 token1:",token1,":",formatEther(reserves1._reserve1))
   const reserves2=await pair2.getReserves(overrides)
   token0=await pair2.token0()
   token1=await pair2.token1()
-  console.log(token0,":",formatEther(reserves2._reserve0))
-  console.log(token1,":",formatEther(reserves2._reserve1))
+  console.log("pair2 token0:",token0,":",formatEther(reserves2._reserve0))
+  console.log("pair2 token1:",token1,":",formatEther(reserves2._reserve1))
 }
+//计算根据三角套利公式计算pair0的baseToken借贷数量
 async function call_airbitrage_profit(r:BN,baseToken:string,pair0:UniswapV2Pair,pair1:UniswapV2Pair,pair2:UniswapV2Pair):Promise<BN>{
  let token0= await pair0.token0()
  let token1= await pair0.token1()
@@ -136,12 +133,8 @@ async function call_airbitrage_profit(r:BN,baseToken:string,pair0:UniswapV2Pair,
  const x2= new BN(token0==tokenC?reserves._reserve0.toString():reserves._reserve1.toString())
  const y2= new BN(token0==tokenC?reserves._reserve1.toString():reserves._reserve0.toString())
  let Ea=y0.multipliedBy(y1).multipliedBy(y2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r)).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2))))
- console.log("Ea:",Ea.toNumber().toString())
  let Eb=x0.multipliedBy(x1).multipliedBy(x2).div(x1.multipliedBy(x2).plus(x2.multipliedBy(y0).multipliedBy(r).plus(y0.multipliedBy(y1).multipliedBy(r.pow(2)))))
- console.log("Eb:",Eb.toNumber().toString())
- let temp=Ea.multipliedBy(Eb).multipliedBy(r).toString()
- let tempBN=new BN(temp)
- return new BN(tempBN.sqrt().toString()).minus(Eb).div(r)
+ return Ea.multipliedBy(Eb).multipliedBy(r).sqrt().minus(Eb).div(r)
 }
   
   // We recommend this pattern to be able to use async/await everywhere
